@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Records — Marks Scanner{% endblock %}
+
+{% block content %}
+<main class="panel">
+    <div class="panel-corner tl"></div>
+    <div class="panel-corner tr"></div>
+    <div class="panel-corner bl"></div>
+    <div class="panel-corner br"></div>
+
+    <h1 class="panel-title"><span class="eyebrow">04 // ARCHIVE</span>All Records</h1>
+
+    {% if students %}
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Age</th><th>Total</th>
+                <th>%</th><th>Grade</th><th>Result</th><th>Scanned</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+            <tr>
+                <td>#{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.age }}</td>
+                <td>{{ s.total_marks }}</td>
+                <td>{{ s.percentage }}%</td>
+                <td>{{ s.grade }}</td>
+                <td><span class="pill result-{{ s.result|lower }}">{{ s.result }}</span></td>
+                <td class="dim">{{ s.created_at }}</td>
+                <td>
+                    <form action="{{ url_for('delete', student_id=s.id) }}" method="POST">
+                        <button type="submit" class="row-remove" title="Delete">✕</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">No records yet. Run a scan to add the first one.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="btn-primary">+ New Scan</a>
+</main>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Scan Result — {{ name }}{% endblock %}
+
+{% block content %}
+<main class="panel">
+    <div class="panel-corner tl"></div>
+    <div class="panel-corner tr"></div>
+    <div class="panel-corner bl"></div>
+    <div class="panel-corner br"></div>
+
+    <h1 class="panel-title"><span class="eyebrow">03 // RESULT</span>Evaluation Complete</h1>
+
+    <div class="result-grid">
+        <div class="gauge-block">
+            {% set circumference = 326.7 %}
+            {% set offset = circumference - (circumference * percentage / 100) %}
+            <svg viewBox="0 0 120 120" class="gauge">
+                <circle cx="60" cy="60" r="52" class="gauge-track"></circle>
+                <circle cx="60" cy="60" r="52" class="gauge-fill result-{{ result|lower }}"
+                        stroke-dasharray="{{ circumference }}"
+                        stroke-dashoffset="{{ offset }}"></circle>
+                <text x="60" y="54" class="gauge-percent">{{ percentage }}%</text>
+                <text x="60" y="74" class="gauge-grade">{{ grade }}</text>
+            </svg>
+            <div class="result-tag result-{{ result|lower }}">{{ result }}</div>
+        </div>
+
+        <div class="info-block">
+            <div class="id-row">
+                <div>
+                    <span class="label">Name</span>
+                    <span class="value">{{ name }}</span>
+                </div>
+                <div>
+                    <span class="label">Age</span>
+                    <span class="value">{{ age }}</span>
+                </div>
+                <div>
+                    <span class="label">Total Marks</span>
+                    <span class="value">{{ total_marks }}</span>
+                </div>
+                <div>
+                    <span class="label">Record ID</span>
+                    <span class="value">#{{ student_id }}</span>
+                </div>
+            </div>
+
+            <table class="subject-table">
+                <thead>
+                    <tr><th>Subject</th><th>Marks</th></tr>
+                </thead>
+                <tbody>
+                    {% for sub, mark in subjects %}
+                    <tr>
+                        <td>{{ sub }}</td>
+                        <td>{{ mark }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="hi-lo-row">
+                <div class="hi-lo hi">
+                    <span class="label">▲ Highest</span>
+                    <span class="value">{{ highest[0] }} — {{ highest[1] }}</span>
+                </div>
+                <div class="hi-lo lo">
+                    <span class="label">▼ Lowest</span>
+                    <span class="value">{{ lowest[0] }} — {{ lowest[1] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ url_for('index') }}" class="btn-ghost">◂ New Scan</a>
+    <a href="{{ url_for('history') }}" class="btn-primary">View All Records ▸</a>
+</main>
+{% endblock %}

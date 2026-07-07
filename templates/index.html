@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}New Scan — Marks Scanner{% endblock %}
+
+{% block content %}
+<main class="panel">
+    <div class="panel-corner tl"></div>
+    <div class="panel-corner tr"></div>
+    <div class="panel-corner bl"></div>
+    <div class="panel-corner br"></div>
+
+    <h1 class="panel-title"><span class="eyebrow">01 // INPUT</span>Student Record Entry</h1>
+
+    <form action="{{ url_for('calculate') }}" method="POST" id="scanForm">
+        <div class="field-row">
+            <div class="field">
+                <label for="name">Student Name</label>
+                <input type="text" id="name" name="name" required autocomplete="off">
+            </div>
+            <div class="field field-narrow">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="1" max="100" required>
+            </div>
+        </div>
+
+        <div class="subjects-header">
+            <span class="eyebrow">02 // SUBJECTS</span>
+            <span class="hint">Marks out of 100 each</span>
+        </div>
+
+        <div id="subjectRows">
+            <div class="subject-row">
+                <input type="text" name="subject_name[]" placeholder="Subject name" required>
+                <input type="number" name="subject_marks[]" placeholder="Marks" min="0" max="100" required>
+                <button type="button" class="row-remove" onclick="removeRow(this)">✕</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn-ghost" onclick="addRow()">+ Add Subject</button>
+
+        <button type="submit" class="btn-primary">Run Evaluation ▸</button>
+    </form>
+</main>
+
+<script>
+function addRow() {
+    const container = document.getElementById('subjectRows');
+    const row = document.createElement('div');
+    row.className = 'subject-row';
+    row.innerHTML = `
+        <input type="text" name="subject_name[]" placeholder="Subject name" required>
+        <input type="number" name="subject_marks[]" placeholder="Marks" min="0" max="100" required>
+        <button type="button" class="row-remove" onclick="removeRow(this)">✕</button>
+    `;
+    container.appendChild(row);
+}
+
+function removeRow(btn) {
+    const rows = document.querySelectorAll('.subject-row');
+    if (rows.length > 1) {
+        btn.parentElement.remove();
+    }
+}
+</script>
+{% endblock %}

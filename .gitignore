@@ -1,0 +1,17 @@
+# Byte-compiled files
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+
+# Database (don't commit real student data)
+students.db
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
