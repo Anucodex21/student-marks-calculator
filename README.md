@@ -1,4 +1,4 @@
-# student-marks-calculator
+# Student-Marks-Calculator
 
 # Marks Scanner — Student Marks Calculator
 
